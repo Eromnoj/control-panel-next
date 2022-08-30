@@ -1,0 +1,29 @@
+@use 'variables'
+.confirmLayout
+  width: 100vw
+  height: 100vh
+  background-color: variables.$red
+  position: absolute
+  top: 0px
+  display: flex
+  justify-content: center
+  align-items: center
+
+.confirmBox
+  background-color: variables.$white
+  width: 40%
+  padding: 20px
+  text-align: center
+
+.confirmButton
+  border: none
+  background-color: variables.$brownpink
+  color: variables.$white
+  font-family: 'Jost', sans-serif
+  font-weight: 300
+  pupdateing: 5px 15px
+  font-size: 1.2em
+  transition: background-color 0.5s
+  margin: 5px
+  &:hover
+    background-color: variables.$red

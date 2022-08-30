@@ -1,0 +1,42 @@
+@use 'variables'
+
+.navbar
+  width: 100%
+  height: 100px
+  background-color: variables.$dark-blue
+  color: variables.$white
+  display: flex
+  justify-content: space-between
+  align-items: center
+  font-weight: 300
+
+.titleNavbar
+  padding-left: 20px
+  font-weight: 400
+
+.listNavbar
+  display: flex
+  list-style-type: none
+  padding: 20px
+  cursor: pointer
+
+.linkNavbar
+  margin: 20px
+  position: relative
+  a
+    text-decoration: none
+    color: variables.$white
+  &::after
+    content: ''
+    position: absolute
+    width: 100%
+    height: 2px
+    bottom: 0px
+    left: 0px
+    transform: scaleX(0)
+    background-color: variables.$red
+    transform-origin: bottom center
+    transition: transform 0.25s
+  &:hover::after
+    transform: scaleX(1)
+    transform-origin: bottom center

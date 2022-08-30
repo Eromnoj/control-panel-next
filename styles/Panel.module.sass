@@ -1,0 +1,90 @@
+@use 'variables'
+.panelLayout
+  display: grid
+  grid-template-columns: 30% 70%
+  width: 100%
+  position: relative
+  top: 50px
+  bottom: 0px
+
+.searchArea
+  width: 100%
+  display: flex
+  justify-content: center
+
+.displayArea
+  display: flex
+  width: 100%
+  justify-content: center
+  align-items: center
+  margin-top: 0
+  margin-bottom: 0
+
+.formPanel
+  font-weight: 600
+  width: 400px
+  height: 300px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: space-evenly
+  background-color: rgba(255, 255, 255, 0.5)
+
+  input
+    font-family: 'Jost', sans-serif
+    font-weight: 400
+    font-size: 1.2rem
+    text-align: center
+    padding: 6px
+    margin: 6px
+    width: 80%
+    height: 3rem
+
+  .searchButton
+    border: none
+    background-color: variables.$brownpink
+    color: variables.$white
+    font-family: 'Jost', sans-serif
+    font-weight: 300
+    padding: 5px 15px
+    font-size: 1.2em
+    transition: background-color 0.5s
+    &:hover
+      background-color: variables.$red
+
+.tableNurse
+  width: 80%
+  text-align: center
+  border-collapse: collapse
+  tr
+    height: 3em
+  .tableNurseHead
+    background-color: variables.$dark-blue
+    color: variables.$white
+  .tableNurseBody
+    tr:nth-child(2n)
+      background-color: change-color(variables.$blue, $alpha: 0.2)
+    tr:hover
+      background-color: rgba(85, 82, 82, 0.1)
+  .tableNurseFoot
+    tr
+      td
+        width: 100%
+        div
+          height: 100%
+          width: 100%
+          display: flex
+          justify-content: space-evenly
+          .tableCurrentPage
+            text-decoration: underline
+  .panelButton
+    border: none
+    background-color: variables.$brownpink
+    color: variables.$white
+    font-family: 'Jost', sans-serif
+    font-weight: 300
+    padding: 5px 15px
+    font-size: 0.9em
+    transition: background-color 0.5s
+    &:hover
+      background-color: variables.$red
