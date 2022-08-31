@@ -1,16 +1,16 @@
 @use 'variables'
 .panelLayout
   display: grid
-  grid-template-columns: 30% 70%
+  grid-template-rows: 20% 80%
   width: 100%
   position: relative
-  top: 50px
   bottom: 0px
 
 .searchArea
   width: 100%
   display: flex
   justify-content: center
+  align-items: flex-start
 
 .displayArea
   display: flex
@@ -23,12 +23,13 @@
 .formPanel
   font-weight: 600
   width: 400px
-  height: 300px
   display: flex
   flex-direction: column
   align-items: center
   justify-content: space-evenly
   background-color: rgba(255, 255, 255, 0.5)
+  padding-bottom: 150px
+  padding-top: 50px
 
   input
     font-family: 'Jost', sans-serif
@@ -53,9 +54,10 @@
       background-color: variables.$red
 
 .tableNurse
-  width: 80%
+  width: 98%
   text-align: center
-  border-collapse: collapse
+  // border-collapse: collapse
+  font-size: 0.8em
   tr
     height: 3em
   .tableNurseHead
