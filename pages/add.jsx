@@ -223,7 +223,7 @@ function Add() {
             </div>
             <div className={styles.addNurseInput}>
               <div>
-                <label htmlFor="zoning">Zone d'intervention</label>
+                <label htmlFor="zoning">Zone d&apos;intervention</label>
                 <br />
                 <small>Séparées par des virgules</small>
               </div>

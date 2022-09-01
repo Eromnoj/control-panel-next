@@ -108,7 +108,7 @@ function Panel({ data }) {
         <main className={styles.panelLayout}>
           <div className={styles.searchArea}>
             <form className={styles.formPanel}>
-              <label htmlFor='search'>Rechercher le nom d'une infirmière</label>
+              <label htmlFor='search'>Rechercher le nom d&apos;une infirmière</label>
               <input type='text' name='search' id='search' onChange={handleSearch} />
               {/* <button className={styles.searchButton} id='searchButton'>Recherche</button> */}
             </form>

@@ -20,7 +20,7 @@ function Navbar({ userName }) {
 	}
 	return (
 		<nav className={styles.navbar}>
-			<h2 className={styles.titleNavbar}>Panneau d'adminstration</h2>
+			<h2 className={styles.titleNavbar}>Panneau d&apos;adminstration</h2>
 			{ userName ?
 			<h4>Bienvenue, {userName} !</h4>: <h4>Ajouter un Client</h4>
 			}
