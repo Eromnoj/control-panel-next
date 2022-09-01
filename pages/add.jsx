@@ -135,11 +135,11 @@ function Add() {
     isConnected
       ? <>
         <Head>
-          <title>Ajouter une infirmière</title>
+          <title>Ajouter un Client</title>
         </Head>
         <Navbar />
         <main className={styles.addLayout}>
-          <h1 className={styles.titleAdd}>Ajouter une infirmière</h1>
+          <h1 className={styles.titleAdd}>Ajouter un Client</h1>
           <form className={styles.addNurseForm}>
             <div className={styles.addNurseInput}>
               <label htmlFor="lastName">Nom</label>
@@ -167,6 +167,7 @@ function Add() {
               type='tel' 
               name='phone' 
               id='phone' 
+              pattern="{0-9}10"
               value={nurseToAdd.phone}
               onChange={handleChange}
               required />

@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar"
 import Update from "../components/Update"
 import { useEffect, useState } from "react"
 import Confirm from "../components/Confirm"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, getDoc, doc } from "firebase/firestore"
 import { auth, db } from '../conf/Firebase-conf'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useRouter } from "next/router"
@@ -14,7 +14,7 @@ function Panel({ data }) {
 
   const router = useRouter()
   const [isConnected, setIsConnected] = useState(false)
-
+  const [adminData, setAdminData] = useState([])
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -22,6 +22,11 @@ function Panel({ data }) {
         router.push('/')
       } else {
         setIsConnected(true)
+        const fetchUserData = async () => {
+          const adminResponse = await getDoc(doc(db, 'admin', user.uid))
+          setAdminData(adminResponse.data())
+        }
+        fetchUserData()
       }
     })
   }, [])
@@ -41,30 +46,56 @@ function Panel({ data }) {
   }
 
   const [displayNurseList, setDisplayNurseList] = useState([])
-  useEffect(()=>{
+  useEffect(() => {
     setDisplayNurseList(data)
-  },[data])
+    setDisplayNurseList(prev => prev.sort((a, b) => (a.nurseData.lastName > b.nurseData.lastName) ? 1 : ((b.nurseData.lastName > a.nurseData.lastName) ? -1 : 0)))
+  }, [data])
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value
     setDisplayNurseList(data.filter(item => item.nurseData.lastName.toLowerCase().includes(searchTerm.toLowerCase())))
 
   }
-  const nurseList = displayNurseList.map(nurse => {
+
+  const [firstItem, setFirstItem] = useState(0)
+  const [lastItem, setLastItem] = useState(10)
+
+  const nurseList = displayNurseList.slice(firstItem, lastItem).map(nurse => {
     return (
       <tr key={nurse.id}>
         <td>{nurse.nurseData.lastName}</td>
         <td>{nurse.nurseData.firstName}</td>
-        <td>{nurse.nurseData.fullAdress.address}<br/>
-        {nurse.nurseData.fullAdress.zipcode} {nurse.nurseData.fullAdress.city}</td>
+        <td>{nurse.nurseData.fullAdress.address}<br />
+          {nurse.nurseData.fullAdress.zipcode} {nurse.nurseData.fullAdress.city}</td>
         <td>{nurse.nurseData.phone}</td>
         <td>{nurse.nurseData.email}</td>
         <td>{nurse.nurseData.website}</td>
         <td><button className={styles.panelButton} onClick={() => handleUpdateClick(nurse)}>Modifier</button></td>
-        <td><button className={styles.panelButton} onClick={() => handleDeleteClick(nurse)}>Supprimer</button></td>
+        {adminData.fullRight && <td><button className={styles.panelButton} onClick={() => handleDeleteClick(nurse)}>Supprimer</button></td>}
       </tr>
     )
   })
+
+  const handlePagination = (way) => {
+    if (way === 'prev') {
+      if (firstItem < 0) {
+        setFirstItem(prev => prev + 10)
+        setLastItem(prev => prev + 10)
+        return
+      }
+      setFirstItem(prev => prev - 10)
+      setLastItem(prev => prev - 10)
+    } else if (way === 'next') {
+      if (lastItem >= displayNurseList.length) {
+        setLastItem(displayNurseList.length)
+        setFirstItem(displayNurseList.length - 10)
+        return
+      }
+      setFirstItem(prev => prev + 10)
+      setLastItem(prev => prev + 10)
+    }
+  }
+
 
   return (
     isConnected
@@ -72,7 +103,7 @@ function Panel({ data }) {
         <Head>
           <title>Panneau de contrôle</title>
         </Head>
-        <Navbar />
+        <Navbar userName={adminData.name}/>
 
         <main className={styles.panelLayout}>
           <div className={styles.searchArea}>
@@ -94,7 +125,7 @@ function Panel({ data }) {
                   <th>email</th>
                   <th>Site internet</th>
                   <th>Modifier</th>
-                  <th>Supprimer</th>
+                  {adminData.fullRight && <th>Supprimer</th>}
                 </tr>
               </thead>
               <tbody className={styles.tableNurseBody}>
@@ -102,7 +133,10 @@ function Panel({ data }) {
               </tbody>
               <tfoot className={styles.tableNurseFoot}>
                 <tr>
-                  <td colSpan={9}><div><button className={styles.panelButton}>Previous</button>1 <span className={styles.tableCurrentPage}>2</span> 3<button className={styles.panelButton}>Next</button></div></td>
+                  <td colSpan={9}><div>
+                    {firstItem > 0 && <button className={styles.panelButton} onClick={() => handlePagination('prev')}>Previous</button>}
+                    {lastItem < displayNurseList.length && <button className={styles.panelButton} onClick={() => handlePagination('next')}>Next</button>}
+                  </div></td>
                 </tr>
               </tfoot>
             </table>
@@ -120,6 +154,7 @@ function Panel({ data }) {
 export default Panel
 
 export const getServerSideProps = async () => {
+
   const nurseRef = collection(db, 'infirmier')
 
   const response = await getDocs(nurseRef)

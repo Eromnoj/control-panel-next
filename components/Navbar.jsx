@@ -4,7 +4,7 @@ import { auth } from '../conf/Firebase-conf'
 import { signOut } from 'firebase/auth'
 import { useRouter } from 'next/router'
 
-function Navbar() {
+function Navbar({ userName }) {
 
 	const router = useRouter()
 
@@ -21,7 +21,9 @@ function Navbar() {
 	return (
 		<nav className={styles.navbar}>
 			<h2 className={styles.titleNavbar}>Panneau d'adminstration</h2>
-			<h4>Bienvenue, utilisateur !</h4>
+			{ userName ?
+			<h4>Bienvenue, {userName} !</h4>: <h4>Ajouter un Client</h4>
+			}
 			<ul className={styles.listNavbar}>
 				<li className={styles.linkNavbar}>
 					<Link href='/add'>Ajouter</Link>

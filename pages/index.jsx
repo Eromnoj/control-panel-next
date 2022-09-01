@@ -23,7 +23,7 @@ export default function Home() {
         [name]: value
       }
     })
-    console.log(credentials)
+    // console.log(credentials)
   }
 
   const handleConnexion = (email, password, event) => {

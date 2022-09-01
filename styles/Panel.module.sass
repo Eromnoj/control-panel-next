@@ -1,35 +1,34 @@
 @use 'variables'
 .panelLayout
   display: grid
-  grid-template-rows: 20% 80%
+  grid-template-columns: 20% 80%
   width: 100%
   position: relative
+  top: 50px
   bottom: 0px
 
 .searchArea
   width: 100%
   display: flex
   justify-content: center
-  align-items: flex-start
 
 .displayArea
   display: flex
   width: 100%
   justify-content: center
-  align-items: center
+  align-items: flex-start
   margin-top: 0
   margin-bottom: 0
 
 .formPanel
   font-weight: 600
   width: 400px
+  height: 300px
   display: flex
   flex-direction: column
   align-items: center
   justify-content: space-evenly
   background-color: rgba(255, 255, 255, 0.5)
-  padding-bottom: 150px
-  padding-top: 50px
 
   input
     font-family: 'Jost', sans-serif
@@ -54,10 +53,9 @@
       background-color: variables.$red
 
 .tableNurse
-  width: 98%
+  width: 90%
   text-align: center
-  // border-collapse: collapse
-  font-size: 0.8em
+  border-collapse: collapse
   tr
     height: 3em
   .tableNurseHead
@@ -70,6 +68,7 @@
       background-color: rgba(85, 82, 82, 0.1)
   .tableNurseFoot
     tr
+      width: 100%
       td
         width: 100%
         div
